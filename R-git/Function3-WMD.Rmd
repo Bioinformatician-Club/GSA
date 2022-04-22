@@ -1,0 +1,143 @@
+---
+title: "Function3"
+author: "Atom"
+date: "4/1/2022"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+```{r}
+library(tidyverse)
+library(broom)
+
+require(ISLR)
+
+# 1) unfiltered table with all the Xs and Ys.
+# 2) GS: a PED column including the target genes of study
+# 3) CVnames: a PED column including all the Xs of consideration.
+# 4) Trait: a String, the Y
+
+# "conf.int=FALSE", user可以自己选择conf.int等于true还是false
+glm_Summary <- function(rawTable, GeneSet, CVnames, Trait, conf.int=FALSE) {
+
+rawTable <- rawTable %>% as_tibble()
+GeneSet <- GeneSet %>% as_tibble() %>% pull(1)
+CVnames <- CVnames %>% as_tibble() %>% pull(1)
+
+# Internal function 1
+glmFunction <- function(inputTable, y){
+  # Trait = y; . = 除了Trait以外的其它列
+  f <- paste0(y,"~ .")
+  glm(formula = as.formula(f), data = inputTable, family = "binomial")
+}
+
+# Internal function 2
+# '...' = whatever is entered here as '...' will be referred to within the function at the place where '...' is called.
+tidy_fun <- function(model, GS_Count, ...) {
+  # 'broom::tidy' apply the function 'tidy', which comes from the package 'broom'
+  broom::tidy(model, ...) %>%
+    # model table只取GS_count这一行，改名为term
+    filter(term == GS_Count)
+}
+
+# Filter rawTable -> relevantTable
+relevantTable <- rawTable %>% 
+  # 选择rawTable中所有名字在GeneSet、CVnames和Trait中被提到了的列
+  select(all_of(GeneSet), all_of(CVnames), all_of(Trait)) %>%
+  # pivot_longer: 想让哪个column做自变量就把哪个column转到横轴上去
+  pivot_longer(cols = all_of(GeneSet), names_to = "category", values_to = "count") %>%
+  group_by(category) %>%
+  # nest: 把category下面的几个GeneSet分别作为table name，其余信息生成table，也就是splitting relevantTable into several sub tables
+  nest() %>%
+  # 要用map把glm function apply到每一个刚刚分出来的sub table上
+  mutate(logistic_regression = map(data, ~glmFunction(., Trait))) 
+
+relevantTable <- relevantTable %>%
+  transmute(category, beta = map(logistic_regression, ~tidy_fun(., "count", conf.int = conf.int))) %>%
+  unnest(cols = c(beta))
+
+return (relevantTable)
+}
+
+
+
+
+
+# User page:
+
+testDataF3 <- read_tsv("/Users/mac/Desktop/testDataF3")
+GeneSetF3 <- read_tsv("/Users/mac/Desktop/GeneSetF3", col_names = FALSE)
+CVF3 <- read_tsv("/Users/mac/Desktop/CVF3", col_names = FALSE)
+
+# Change the type of DISEASE and SEX into 'factor', which means categories
+testDataF3 <- testDataF3 %>%
+  mutate(DISEASE = as.factor(DISEASE),
+         SEX = as.factor(SEX))
+
+rawTable <- testDataF3 %>% as_tibble()
+GeneSet <- GeneSetF3 %>% as_tibble()
+CVnames <- CVF3 %>% as_tibble()
+Trait <- 'DISEASE'
+
+New <- glm_Summary(rawTable, GeneSet, CVnames, Trait,conf.int=F)
+New
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Import the PED files
+rawTable <- rawTable %>% as_tibble()
+GeneSet <- GeneSet %>% as_tibble()
+CVnames <- CVnames %>% as_tibble()
+
+# Filter rawTable -> relevantTable
+relevantTable <- rawTable %>% 
+  # 选择rawTable中所有名字在GeneSet、CVnames和Trait中被提到了的列
+  select(all_of(GeneSet), all_of(CVnames), Trait) %>%
+  # pivot_longer: 想让哪个column做自变量就把哪个column转到横轴上去
+  pivot_longer(cols = all_of(GeneSet), names_to = "category", values_to = "count") %>%
+  group_by(category) %>%
+  # nest: 把category下面的几个GeneSet分别作为table name，其余信息生成table，也就是splitting relevantTable into several sub tables
+  nest() %>%
+  # 要用map把glm function apply到每一个刚刚分出来的sub table上
+  mutate(logistic_regression = map(f = ~glm(formula = Trait ~ ., data = ., family = binomial))) %>%
+  unnest(logistic_regression)
+
+# Logistic regression formula
+glm.fit <- glm(formula = Trait ~ ., data = relevantTable, family = binomial)
+
+summary(glm.fit)
+exp(estimate)
+?exp
+
+broom::tidy(glm.fit, conf.int = T) %>%
+  mutate(or=exp(estimate))
+
+
+
+broom::tidy(glm.fit, conf.int = T) %>%
+  mutate(or=exp(estimate)) %>%
+  filter(term == "Volume")
+```
+```{r}
+#tsv = 以TAB为间隔的文件
+# col_names = FALSE, 不要把第一行当作header
+testDataF3 <- read_tsv("/Users/mac/Desktop/testDataF3")
+GeneSetF3 <- read_tsv("/Users/mac/Desktop/GeneSetF3", col_names = FALSE)
+CVF3 <- read_tsv("/Users/mac/Desktop/CVF3", col_names = FALSE)
+
+testDataF3
+GeneSetF3
+CVF3
+```
+
+
