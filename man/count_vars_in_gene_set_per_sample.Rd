@@ -2,20 +2,34 @@
 % Please edit documentation in R/count_vars_in_gene_set_per_sample.R
 \name{count_vars_in_gene_set_per_sample}
 \alias{count_vars_in_gene_set_per_sample}
-\title{count genotype of specified genes}
+\title{Count the total number of counting metric in a gene set for each sample}
 \usage{
 count_vars_in_gene_set_per_sample(table, gene.set, gene.set.name)
 }
 \arguments{
-\item{Table}{a dataframe contains a colume of gene names and columes of population genetype which have been processed into numeric form.}
+\item{table}{A tibble which has first column representing gene name and the rest of columns representing the counting metrics of samples. An example is the output of the function count_vars_per_gene_per_sample.}
 
-\item{GeneSet}{The name of gene(can be more than one) you are interested in.}
+\item{gene.set}{A vector of gene names specifying a gene set. Usually it is a subset of genes from the first column of input table.}
 
-\item{Name}{the name of geneset you come up with.}
+\item{gene.set.name}{A string specifying the name of the gene set which will be used as the column name in the output}
 }
 \value{
-The return of the function is a table containing two columes named by "Sample ID" and user's input "Name". The "Name" colume dislpays the sum of genotypes of the genes offered by the user.
+A tibble with two columns. The first column "sampleID" represents sample names and the second column named with \emph{gene.set.name} represents the total number of metric in the input \emph{gene.set}.
 }
 \description{
-the function is used to count the genotype of specified genes inputed by the user. A reference of which geneset has a higher impact on the disease.
+This function count the total number of counting metric (i.e. alleles, locus or carrier-status from function count_vars_per_gene_per_sample) in a gene set for each sample.
+}
+\examples{
+\dontrun{
+data("1000g")
+
+# generate allele count table for each gene and each sample
+gene.ac <- count_vars_per_gene_per_sample(table = variants, gene.col = 8, gt.col = 12, type = "allele")
+
+# here just pick some genes and use as an example as a gene set input
+gene.list <- gene.ac$GENE[10:14]
+
+# count the total number of alleles in the gene set for each sample
+geneset.ac <- count_vars_in_gene_set_per_sample(table = gene.ac, gene.set = gene.list, gene.set.name = "genesetA")
+}
 }
