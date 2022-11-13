@@ -1,9 +1,3 @@
----
-editor_options: 
-  markdown: 
-    wrap: 72
----
-
 # GSA
 
 `GSA` is an R package for gene set analysis (GSA) of rare variants in
