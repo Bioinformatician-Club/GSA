@@ -1,10 +1,12 @@
 Package: GSA
-Title: What the Package Does (One Line, Title Case)
-Version: 0.0.0.9000
+Title: Gene set analysis in rare variant studies
+Version: 0.1.0
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+    c(person("Bioinformatician", "Club", , "first.last@example.com", role = c("aut", "cre")),
+    person("Maidou", "Wang", , "first.last@example.com", role = c("ctb")),
+    person("Xiaoyi", "Wang", , "first.last@example.com", role = c("ctb")))
+Description: Miscellaneous R functions for analysing rare variants in case-control studies, including functions related to
+    burden analysis, gene set analysis, and general utilities.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

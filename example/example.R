@@ -1,6 +1,6 @@
 library(devtools)
 library(tidyverse)
-check()
+library(GSA)
 
 data("1000g")
 
