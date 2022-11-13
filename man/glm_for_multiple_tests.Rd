@@ -92,5 +92,4 @@ glm.results <- glm_for_multiple_tests(ped = ped.with.geneset.count, outcome = "D
 
 glm.results
 }
-
 }

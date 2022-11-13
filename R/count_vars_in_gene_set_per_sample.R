@@ -8,6 +8,7 @@
 #' @return
 #' A tibble with two columns. The first column "sampleID" represents sample names and the second column named with *gene.set.name* represents the total number of metric in the input *gene.set*.
 #' @importFrom rlang .data
+#' @export
 #' @examples
 #' \dontrun{
 #' data("1000g")
@@ -21,7 +22,6 @@
 #' # count the total number of alleles in the gene set for each sample
 #' geneset.ac <- count_vars_in_gene_set_per_sample(table = gene.ac, gene.set = gene.list, gene.set.name = "genesetA")
 #' }
-
 
 count_vars_in_gene_set_per_sample <- function(table, gene.set, gene.set.name) {
 

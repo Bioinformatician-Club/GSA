@@ -1,4 +1,4 @@
-#' Run logistic regressions for multiple independent variables respectively at once
+#'@title Run logistic regressions for multiple independent variables respectively at once
 #'
 #' @param ped
 #' A data frame with a PED format supported by PLINK software to represent phenotype/outcome and covariates for the logistic regression. Running \code{data("1000g")} to load an example of ped file.
@@ -44,6 +44,7 @@
 #' \code{model}       The original output from the logistic regression.
 #'
 #' @importFrom rlang .data
+#' @export
 #' @examples
 #' \dontrun{
 #' data("1000g")
@@ -75,7 +76,7 @@
 #'
 #' glm.results
 #' }
-#'
+
 glm_for_multiple_tests <- function(ped, outcome, interested.variables, covariates, tidy.output = FALSE, conf.int = FALSE, conf.level = 0.95, exponentiate = FALSE){
 
   interested.variables.tmp <- interested.variables

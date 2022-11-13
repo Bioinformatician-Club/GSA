@@ -2,9 +2,9 @@ Package: GSA
 Title: Gene set analysis in rare variant studies
 Version: 0.1.0
 Authors@R: 
-    c(person("Bioinformatician", "Club", , "first.last@example.com", role = c("aut", "cre")),
-    person("Maidou", "Wang", , "first.last@example.com", role = c("ctb")),
-    person("Xiaoyi", "Wang", , "first.last@example.com", role = c("ctb")))
+    c(person("Bioinformatician", "Club", , "bioinformatician.pm@gmail.com", role = c("aut", "cre")),
+    person("Maidou", "Wang", , "xiaoaojianghu1357@qq.com", role = c("ctb")),
+    person("Xiaoyi", "Wang", , "XWang49@pearsoncollege.ca", role = c("ctb")))
 Description: Miscellaneous R functions for analysing rare variants in case-control studies, including functions related to
     burden analysis, gene set analysis, and general utilities.
 License: MIT + file LICENSE
