@@ -1,7 +1,7 @@
-library(devtools)
-library(tidyverse)
 library(GSA)
+library(tidyverse)
 
+# load example data, variants including individual-level variant genotypes, ped including individual-level phenotype data. 
 data("1000g")
 
 # generate allele count table for each gene and each sample
