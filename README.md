@@ -15,3 +15,10 @@ remotes::install_github("Bioinformatician-Club/GSA")
 ```
 
 We have also published an example script in the `example` folder.
+
+**Contributors**
+
+[Maidou Wang](https://github.com/AtomWangMaidou) 
+
+[Xiaoyi Wang](https://github.com/Alice0606)
+
