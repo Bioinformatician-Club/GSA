@@ -18,7 +18,6 @@ We have also published an example script in the `example` folder.
 
 **Contributors**
 
-[Maidou Wang](https://github.com/AtomWangMaidou) 
+[Maidou Wang](https://github.com/AtomWangMaidou) from ICC China. Email: xiaoaojianghu1357@qq.com
 
-[Xiaoyi Wang](https://github.com/Alice0606)
-
+[Xiaoyi Wang](https://github.com/Alice0606) from UWC Pearson. Email：2823594880@qq.com
